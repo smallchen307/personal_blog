@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全端AI與Web3學習路徑互動資訊圖表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Synthwave Sunset -->
+    <!-- Application Structure Plan: A single-page, scrollable infographic designed to tell a linear story of a developer's one-year journey. The structure flows from the "Why" (market trends) to the "How" (the roadmap and tech stack) and finally the "What" (projects and success metrics). This narrative structure is chosen to guide the user logically through the complex information, making it digestible and motivating. -->
+    <!-- Visualization & Content Choices: Data: Market Drivers -> Goal: Inform -> Viz: Large Stat Callouts (HTML/CSS) -> Justification: High impact for key selling points. Data: Phase Timeline -> Goal: Organize/Compare -> Viz: Donut Chart (Chart.js) -> Justification: Clearly shows proportional time allocation for each phase. Data: Learning Roadmap -> Goal: Organize -> Viz: HTML/CSS Flowchart -> Justification: Visually represents the step-by-step process without using prohibited libraries. Data: KPI Profile -> Goal: Compare -> Viz: Radar Chart (Chart.js) -> Justification: Effectively displays multi-dimensional skill targets for a well-rounded developer. All charts use Canvas rendering via Chart.js. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #111827;
+            color: #E5E7EB;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+                max-height: 500px;
+            }
+        }
+        .text-glow {
+            text-shadow: 0 0 8px currentColor;
+        }
+        .card {
+            background-color: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(75, 85, 99, 0.5);
+        }
+        .flowchart-step {
+            border-left-width: 4px;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .flowchart-step::before {
+            content: '';
+            position: absolute;
+            left: -0.8rem;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            background-color: #111827;
+            border: 4px solid;
+        }
+        .flowchart-connector {
+            position: absolute;
+            left: -1px;
+            top: 1.5rem;
+            bottom: 0;
+            width: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-12 md:py-20">
+
+        <header class="text-center mb-16 md:mb-24">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter text-white">一年全端工程師養成計畫</h1>
+            <p class="mt-4 text-xl md:text-2xl text-cyan-400 text-glow">整合 AI & Web3 的未來學習藍圖</p>
+        </header>
+
+        <section id="market-trends" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center text-white mb-10">為何選擇這條路？<span class="block text-lg font-normal text-gray-400 mt-2">市場趨勢與未來機會</span></h2>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="card p-8 rounded-2xl">
+                    <p class="text-6xl font-bold text-pink-500 text-glow"> versatile </p>
+                    <h3 class="text-xl font-bold mt-4 text-white">全端開發者</h3>
+                    <p class="mt-2 text-gray-300">能夠處理從前端到後端的所有層面，具備端到端開發、解決問題與創新的能力，在市場上備受青睞。</p>
+                </div>
+                <div class="card p-8 rounded-2xl">
+                    <p class="text-6xl font-bold text-teal-400 text-glow"> AI </p>
+                    <h3 class="text-xl font-bold mt-4 text-white">人工智慧整合</h3>
+                    <p class="mt-2 text-gray-300">AI 正在徹底改變開發格局，透過 API 整合與 AI 編碼助手，能顯著提升開發效率與應用程式的智慧化程度。</p>
+                </div>
+                <div class="card p-8 rounded-2xl">
+                    <p class="text-6xl font-bold text-violet-500 text-glow"> Web3 </p>
+                    <h3 class="text-xl font-bold mt-4 text-white">Web3 浪潮</h3>
+                    <p class="mt-2 text-gray-300">區塊鏈與去中心化應用（dApps）正高速發展，市場對具備智能合約與 dApp 開發技能的人才需求激增。</p>
+                </div>
+            </div>
+             <p class="text-center mt-10 text-lg text-gray-400 max-w-3xl mx-auto">這份藍圖的核心策略是圍繞 <b class="text-cyan-400 font-bold">JavaScript</b> 統一技術棧，無縫串連前端、後端、AI API互動與Web3開發，最大化您的學習效率。</p>
+        </section>
+
+        <section id="timeline" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center text-white mb-10">一年學習時間分配 <span class="block text-lg font-normal text-gray-400 mt-2">各階段投入時間佔比</span></h2>
+             <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">此計畫為高強度衝刺，總計12個月。此圖表展示了各學習階段的時間分配，讓您對整個學習旅程的節奏有宏觀的了解。每個階段的投入都是為了穩固地邁向下一個里程碑。</p>
+            <div class="chart-container">
+                <canvas id="timelineChart"></canvas>
+            </div>
+        </section>
+
+        <section id="roadmap" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center text-white mb-10">學習路徑圖<span class="block text-lg font-normal text-gray-400 mt-2">從基礎到整合的四個階段</span></h2>
+            <div class="max-w-3xl mx-auto relative">
+                <div class="flowchart-step border-cyan-400 mb-12">
+                    <div class="flowchart-connector bg-gray-700"></div>
+                    <div class="flowchart-step-dot" style="border-color: #22d3ee;"></div>
+                    <h3 class="text-2xl font-bold text-cyan-400">Phase 1: 基礎網頁開發 (2個月)</h3>
+                    <p class="mt-2 text-gray-300">目標是掌握HTML、CSS、JavaScript核心，並熟悉Git版本控制。此階段您將建立起獨立建構靜態與簡單互動網頁的能力。</p>
+                    <p class="font-bold mt-3 text-white">專案里程碑: 個人作品集網站、JavaScript小遊戲。</p>
+                </div>
+                <div class="flowchart-step border-pink-500 mb-12">
+                     <div class="flowchart-connector bg-gray-700"></div>
+                    <div class="flowchart-step-dot" style="border-color: #ec4899;"></div>
+                    <h3 class="text-2xl font-bold text-pink-500">Phase 2: 全端核心開發 (3個月)</h3>
+                    <p class="mt-2 text-gray-300">深入學習React前端框架與Node.js後端，並掌握SQL與NoSQL資料庫操作。目標是具備開發完整CRUD應用的能力。</p>
+                    <p class="font-bold mt-3 text-white">專案里程碑: 全端部落格系統、待辦事項清單應用。</p>
+                </div>
+                <div class="flowchart-step border-teal-400 mb-12">
+                     <div class="flowchart-connector bg-gray-700"></div>
+                    <div class="flowchart-step-dot" style="border-color: #2dd4bf;"></div>
+                    <h3 class="text-2xl font-bold text-teal-400">Phase 3: AI與Web3整合 (4個月)</h3>
+                    <p class="mt-2 text-gray-300">理解AI/ML概念並整合API，同時掌握區塊鏈與Solidity智能合約，開發簡單dApp。這是您邁向未來趨勢的關鍵一步。</p>
+                    <p class="font-bold mt-3 text-white">專案里程碑: AI聊天機器人、基礎NFT鑄造dApp。</p>
+                </div>
+                <div class="flowchart-step border-violet-500">
+                    <div class="flowchart-step-dot" style="border-color: #8b5cf6;"></div>
+                    <h3 class="text-2xl font-bold text-violet-500">Phase 4: 部署與優化 (2個月)</h3>
+                    <p class="mt-2 text-gray-300">學習將應用程式部署到線上，並了解Web安全與性能優化基礎。最終目標是完善您的個人作品集，讓它成為您求職的利器。</p>
+                    <p class="font-bold mt-3 text-white">專案里程碑: 將所有專案部署上線，並優化作品集網站。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="kpi" class="mb-16 md:mb-24">
+            <h2 class="text-3xl font-bold text-center text-white mb-10">成功的樣貌<span class="block text-lg font-normal text-gray-400 mt-2">理想開發者能力雷達圖</span></h2>
+            <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">這不僅僅是學習，更是能力的養成。此雷達圖展示了一位成功的學習者在一年後應具備的各項核心能力維度。它提醒您，除了技術深度，程式碼品質、問題解決能力與社群參與同等重要。</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="chart-container">
+                    <canvas id="kpiChart"></canvas>
+                </div>
+                <div class="text-left space-y-4">
+                    <div class="p-4 rounded-lg bg-gray-800 border border-gray-700">
+                        <h4 class="font-bold text-lg text-cyan-400">專案實作</h4>
+                        <p class="text-gray-300">理論知識的最終試金石，是建立專業作品集的基石。</p>
+                    </div>
+                     <div class="p-4 rounded-lg bg-gray-800 border border-gray-700">
+                        <h4 class="font-bold text-lg text-pink-500">程式碼品質</h4>
+                        <p class="text-gray-300">不僅要能運作，更要清晰、高效、易於維護。</p>
+                    </div>
+                     <div class="p-4 rounded-lg bg-gray-800 border border-gray-700">
+                        <h4 class="font-bold text-lg text-teal-400">問題解決</h4>
+                        <p class="text-gray-300">獨立除錯與解決複雜問題是開發者的核心素養。</p>
+                    </div>
+                     <div class="p-4 rounded-lg bg-gray-800 border border-gray-700">
+                        <h4 class="font-bold text-lg text-violet-500">社群參與</h4>
+                        <p class="text-gray-300">從社群中獲取回饋、擴展人脈並保持學習動力。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="text-center mt-16 border-t border-gray-800 pt-8">
+            <p class="text-gray-500">這份資訊圖表根據「零基礎到全端工程師」研究報告生成。</p>
+            <p class="text-gray-600 text-sm mt-2">持續學習，不斷實踐，是通往成功的唯一路徑。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const wrapLabel = (label, maxLength = 16) => {
+            if (label.length <= maxLength) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const sharedTooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            return Array.isArray(label) ? label.join(' ') : label;
+        };
+        
+        const palette = {
+            cyan: 'rgba(34, 211, 238, 0.8)',
+            pink: 'rgba(236, 72, 153, 0.8)',
+            teal: 'rgba(45, 212, 191, 0.8)',
+            violet: 'rgba(139, 92, 246, 0.8)',
+            gray: 'rgba(156, 163, 175, 0.8)'
+        };
+
+        const gridColor = 'rgba(75, 85, 99, 0.5)';
+        const textColor = '#E5E7EB';
+
+        // Timeline Chart
+        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+        new Chart(timelineCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    wrapLabel('Phase 1: 基礎網頁開發'),
+                    wrapLabel('Phase 2: 全端核心開發'),
+                    wrapLabel('Phase 3: AI與Web3整合入門'),
+                    wrapLabel('Phase 4: 部署、優化與進階實作'),
+                    '彈性/緩衝'
+                ],
+                datasets: [{
+                    label: '學習月數',
+                    data: [2, 3, 4, 2, 1],
+                    backgroundColor: [
+                        palette.cyan,
+                        palette.pink,
+                        palette.teal,
+                        palette.violet,
+                        palette.gray
+                    ],
+                    borderColor: '#111827',
+                    borderWidth: 5,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '60%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: textColor,
+                            font: { size: 12, family: "'Noto Sans TC', sans-serif" },
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: sharedTooltipTitleCallback,
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += `${context.parsed} 個月`;
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // KPI Chart
+        const kpiCtx = document.getElementById('kpiChart').getContext('2d');
+        new Chart(kpiCtx, {
+            type: 'radar',
+            data: {
+                labels: ['專案實作', '程式碼品質', '問題解決', '部署能力', '社群參與', '持續學習'],
+                datasets: [{
+                    label: '理想開發者能力',
+                    data: [5, 4, 4, 4, 3, 5],
+                    backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                    borderColor: 'rgba(34, 211, 238, 1)',
+                    pointBackgroundColor: 'rgba(34, 211, 238, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(34, 211, 238, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                         callbacks: {
+                            title: sharedTooltipTitleCallback
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: gridColor },
+                        grid: { color: gridColor },
+                        pointLabels: { 
+                            color: textColor,
+                            font: { size: 14, family: "'Noto Sans TC', sans-serif" }
+                        },
+                        ticks: {
+                            color: textColor,
+                            backdropColor: '#111827',
+                            stepSize: 1,
+                            max: 5,
+                            min: 0
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

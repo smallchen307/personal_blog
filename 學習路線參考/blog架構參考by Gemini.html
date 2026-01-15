@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人綜合平台 - 概念預覽</title>
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Inter 字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* 輕微的背景色 */
+        }
+        /* 自定義一些 Tailwind 顏色，讓設計更豐富 */
+        .bg-primary { background-color: #0d1a26; } /* 深藍色 */
+        .text-primary-light { color: #e0e7ff; } /* 淺藍色 */
+        .bg-secondary { background-color: #1a2b3c; } /* 次深藍色 */
+        .btn-accent { background-color: #ef4444; } /* 紅色按鈕 */
+        .btn-accent:hover { background-color: #dc2626; }
+        .card-bg { background-color: #ffffff; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 導覽列 (Header) -->
+    <header class="bg-primary text-primary-light p-4 shadow-lg">
+        <nav class="container mx-auto flex justify-between items-center flex-wrap">
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-2xl font-bold rounded-md hover:text-white transition duration-300">
+                    <span class="text-red-500">我的</span>視界
+                </a>
+                <div class="hidden md:flex space-x-6 ml-8">
+                    <a href="#" class="hover:text-white transition duration-300 px-3 py-2 rounded-md">首頁</a>
+                    <a href="#" class="hover:text-white transition duration-300 px-3 py-2 rounded-md">攝影視界</a>
+                    <a href="#" class="hover:text-white transition duration-300 px-3 py-2 rounded-md">程式學習日誌</a>
+                    <a href="#" class="hover:text-white transition duration-300 px-3 py-2 rounded-md">關於我</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hover:text-white transition duration-300 hidden md:block px-3 py-2 rounded-md">會員中心</a>
+                <a href="#" class="hover:text-white transition duration-300 px-3 py-2 rounded-md">
+                    <!-- 購物車圖示 (Lucide React 類似風格的 SVG) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart">
+                        <circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                    </svg>
+                </a>
+                <!-- 手機版選單按鈕 -->
+                <button class="md:hidden text-primary-light focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+                        <line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主視覺區塊 (Hero Section) -->
+    <section class="relative bg-cover bg-center h-[500px] md:h-[600px] flex items-center justify-center text-white"
+             style="background-image: url('https://placehold.co/1920x600/333333/FFFFFF?text=歡迎來到我的綜合網站');">
+        <div class="absolute inset-0 bg-black opacity-50 rounded-md"></div>
+        <div class="relative text-center p-6 max-w-2xl mx-auto rounded-lg">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">探索我的創意與學習之旅</h1>
+            <p class="text-lg md:text-xl mb-8">這裡融合了我的攝影作品、學習歷程與知識分享。</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
+                    進入攝影視界
+                </a>
+                <a href="#" class="bg-blue text-primary hover:bg-gray-100 font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
+                    查看學習日誌
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto py-12 px-4">
+
+        <!-- 精選攝影內容 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">精選攝影內容</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- 影片卡片範例 -->
+                <div class="card-bg rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/400x225/4CAF50/FFFFFF?text=風景攝影" alt="風景攝影" class="w-full h-48 object-cover rounded-t-lg">
+                    <div class="p-5">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">山間的寂靜：延時攝影</h3>
+                        <p class="text-gray-600 text-sm">探索高山深處的自然之美。</p>
+                        <a href="#" class="inline-block mt-4 text-red-500 hover:text-red-600 font-medium transition duration-300">觀看影片 &rarr;</a>
+                    </div>
+                </div>
+                <div class="card-bg rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/400x225/2196F3/FFFFFF?text=人像攝影" alt="人像攝影" class="w-full h-48 object-cover rounded-t-lg">
+                    <div class="p-5">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">捕捉靈魂：人像攝影技巧</h3>
+                        <p class="text-gray-600 text-sm">學習如何透過鏡頭，展現人物情感。</p>
+                        <a href="#" class="inline-block mt-4 text-red-500 hover:text-red-600 font-medium transition duration-300">觀看影片 &rarr;</a>
+                    </div>
+                </div>
+                <div class="card-bg rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/400x225/FFC107/FFFFFF?text=微距攝影" alt="微距攝影" class="w-full h-48 object-cover rounded-t-lg">
+                    <div class="p-5">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">微觀世界：花卉特寫</h3>
+                        <p class="text-gray-600 text-sm">走進微觀世界，發現細節美感。</p>
+                        <a href="#" class="inline-block mt-4 text-red-500 hover:text-red-600 font-medium transition duration-300">觀看影片 &rarr;</a>
+                    </div>
+                </div>
+                <div class="card-bg rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/400x300/FF5722/FFFFFF?text=專業相機" alt="專業相機" class="w-full h-48 object-cover rounded-t-lg">
+                    <div class="p-5">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">專業級單眼相機 XYZ-Pro</h3>
+                        <p class="text-gray-600 text-sm mb-3">高畫質感光元件，極速對焦。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-red-600">NT$ 65,000</span>
+                            <button class="btn-accent text-white py-2 px-4 rounded-md font-medium shadow-md hover:shadow-lg transition duration-300">
+                                加入購物車
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="#" class="inline-block bg-primary text-primary-light hover:bg-secondary py-3 px-8 rounded-full shadow-lg transition duration-300">
+                    更多攝影內容 &rarr;
+                </a>
+            </div>
+        </section>
+
+        <!-- 最新學習日誌 -->
+        <section class="mb-16 bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">最新學習日誌</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 學習筆記卡片範例 -->
+                <div class="card-bg rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                    <div class="p-5">
+                        <span class="text-sm font-semibold text-blue-600 mb-2 block">學習筆記</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">全端開發環境搭建：Mac OS 指南</h3>
+                        <p class="text-gray-600 text-sm mb-3">從 Homebrew 到 Node.js，一步步建立高效開發環境。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 text-xs">2025/07/17</span>
+                            <a href="#" class="text-blue-500 hover:text-blue-600 font-medium transition duration-300">閱讀更多 &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Q&A 卡片範例 -->
+                <div class="card-bg rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                    <div class="p-5">
+                        <span class="text-sm font-semibold text-green-600 mb-2 block">問題與回答</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">如何選擇第一個前端框架？</h3>
+                        <p class="text-gray-600 text-sm mb-3">React、Vue 還是 Angular？我的選擇與考量。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 text-xs">2025/07/15</span>
+                            <a href="#" class="text-blue-500 hover:text-blue-600 font-medium transition duration-300">查看回答 &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 更多學習筆記/Q&A -->
+                <div class="card-bg rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                    <div class="p-5">
+                        <span class="text-sm font-semibold text-blue-600 mb-2 block">學習筆記</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Git 版本控制入門：從基礎到協作</h3>
+                        <p class="text-gray-600 text-sm mb-3">學習 Git 的基本指令和團隊協作流程。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 text-xs">2025/07/12</span>
+                            <a href="#" class="text-blue-500 hover:text-blue-600 font-medium transition duration-300">閱讀更多 &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-bg rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                    <div class="p-5">
+                        <span class="text-sm font-semibold text-green-600 mb-2 block">問題與回答</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">資料庫選型：SQL vs NoSQL 該如何選？</h3>
+                        <p class="text-gray-600 text-sm mb-3">針對不同專案需求，分析關聯式與非關聯式資料庫的優缺點。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 text-xs">2025/07/08</span>
+                            <a href="#" class="text-blue-500 hover:text-blue-600 font-medium transition duration-300">查看回答 &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="#" class="inline-block bg-primary text-primary-light hover:bg-secondary py-3 px-8 rounded-full shadow-lg transition duration-300">
+                    更多學習日誌內容 &rarr;
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁腳 (Footer) -->
+    <footer class="bg-secondary text-primary-light py-8 px-4 rounded-t-lg">
+        <div class="container mx-auto text-center md:flex md:justify-between md:items-center">
+            <div class="mb-4 md:mb-0">
+                <h3 class="text-lg font-bold mb-2">我的視界</h3>
+                <p class="text-sm">&copy; 2025 All rights reserved.</p>
+            </div>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="hover:text-white transition duration-300">聯絡我們</a>
+                <a href="#" class="hover:text-white transition duration-300">隱私政策</a>
+                <a href="#" class="hover:text-white transition duration-300">使用條款</a>
+            </div>
+            <div class="mt-4 md:mt-0 flex justify-center space-x-4">
+                <!-- 社群媒體圖示 (Placeholder) -->
+                <a href="#" class="text-primary-light hover:text-white transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="#" class="text-primary-light hover:text-white transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.5" y1="6.5" y2="6.5"/></svg>
+                </a>
+                <a href="#" class="text-primary-light hover:text-white transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-youtube"><path d="M2.8 20.6A2.8 2.8 0 0 0 5.6 23h12.8a2.8 2.8 0 0 0 2.8-2.6V5.4A2.8 2.8 0 0 0 18.4 3H5.6A2.8 2.8 0 0 0 2.8 5.4Z"/><path d="m10 15.5 6-3.5-6-3.5Z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

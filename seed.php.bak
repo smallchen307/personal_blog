@@ -1,0 +1,30 @@
+<?php
+require 'db.php';
+
+// 檢查是否已經有管理員
+$stmt = $pdo->query("SELECT COUNT(*) FROM admins");
+$adminExists = $stmt->fetchColumn() > 0;
+
+if ($adminExists) {
+    echo "管理員已存在，無需初始化。";
+    exit;
+}
+
+// 創建預設管理員
+$user = 'admin';
+$pass = '123456';
+$hash = password_hash($pass, PASSWORD_DEFAULT); // 建議使用更安全的密碼
+
+$sql = "INSERT INTO admins (username, password) VALUES (?, ?)";
+
+$stmt = $pdo->prepare($sql);
+
+try {
+    $stmt->execute([$user, $hash]);
+    echo "<h2>✅ 系統初始化成功！</h2>";
+    echo "初始帳號：$user <br> 初始密碼：$pass <br>";
+    echo "<p style='color:red'>警告：請務必在登入後修改密碼，並刪除此 seed.php 檔案。</p>";
+    echo "<a href='login.php'>前往登入</a>";
+} catch (PDOException $e) {
+    echo "初始化失敗：" . $e->getMessage();
+}

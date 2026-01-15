@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式全端AI與Web3學習藍圖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A tab-based SPA designed for user-driven exploration. The structure includes: 1. Overview: A dashboard with a timeline chart for a high-level summary. 2. Learning Path: An interactive breakdown of the 4 learning phases. 3. Skill Tree: A detailed, expandable view of all technologies. 4. Projects: A gallery of recommended portfolio projects, now including a Gemini-powered project idea generator. 5. KPIs & Resources: Actionable metrics for tracking progress and a filterable list of resources. This non-linear structure is chosen over the report's linear format to empower the user to explore content based on their immediate interests, making the dense information more manageable and engaging. -->
+    <!-- Visualization & Content Choices: Report Info: 4-phase timeline -> Goal: Compare time allocation -> Viz: Interactive Doughnut Chart -> Interaction: Click slices to view phase details -> Justification: Visually represents proportions and encourages exploration -> Library: Chart.js. Report Info: Technical skills tables -> Goal: Organize complex data -> Viz: Nested Accordions/Cards -> Interaction: Click to expand/collapse -> Justification: Manages information density via progressive disclosure -> Method: HTML/CSS/JS. Report Info: KPI table -> Goal: Inform on metrics -> Viz: Interactive Cards -> Interaction: Hover to highlight -> Justification: More digestible than a dense table -> Method: HTML/CSS/JS. Report Info: Project idea generation -> Goal: Inspire new projects -> Viz: Dynamically generated text card -> Interaction: Button click to trigger LLM call -> Justification: Leverages Gemini's generative capabilities to provide personalized and creative project inspiration -> Method: HTML/CSS/JS with Gemini API. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #fdfcfb;
+            color: #44403c;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            border-bottom-color: #f59e0b;
+            color: #f59e0b;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background-color: white;
+            border: 1px solid #f5f5f4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .loading-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px; /* Adjust as needed */
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #f59e0b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto px-4 py-8">
+        
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-600">零基礎到全端工程師：AI & Web3 整合學習藍圖</h1>
+            <p class="mt-2 text-lg text-stone-600">一份互動式指南，助您在一年內掌握未來科技趨勢</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-stone-200 mb-8 flex-wrap">
+            <a href="#overview" class="nav-link active text-stone-600 font-medium py-3 px-4 md:px-6">總覽</a>
+            <a href="#path" class="nav-link text-stone-600 font-medium py-3 px-4 md:px-6">學習路徑</a>
+            <a href="#skills" class="nav-link text-stone-600 font-medium py-3 px-4 md:px-6">技能樹</a>
+            <a href="#projects" class="nav-link text-stone-600 font-medium py-3 px-4 md:px-6">專案展示</a>
+            <a href="#kpi" class="nav-link text-stone-600 font-medium py-3 px-4 md:px-6">成果檢視 (KPI)</a>
+            <a href="#resources" class="nav-link text-stone-600 font-medium py-3 px-4 md:px-6">資源庫</a>
+        </nav>
+
+        <main>
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="text-center mb-12">
+                     <h2 class="text-2xl font-bold text-stone-700 mb-2">歡迎踏上轉型之旅</h2>
+                     <p class="max-w-3xl mx-auto text-stone-600">這份藍圖旨在引導您從零開始，在一年內挑戰成為具備 AI 與 Web3 整合能力的全端工程師。這是一趟高強度但回報豐厚的旅程。本儀表板將原始報告內容轉化為互動圖表與卡片，讓您可以依據自身步調，探索學習的每一步。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-center text-stone-700">一年學習階段時間分配</h3>
+                        <p class="text-center text-sm text-stone-500 mb-4">點擊圖表區塊以快速跳轉至該階段的詳細說明。</p>
+                        <div class="chart-container">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-6 rounded-lg card">
+                            <h4 class="font-bold text-lg text-amber-600">🎯 核心目標</h4>
+                            <p class="text-stone-600">建立「最小可行全端開發」能力，並融入AI與Web3知識，成為具備獨特競爭優勢的未來人才。</p>
+                        </div>
+                         <div class="p-6 rounded-lg card">
+                            <h4 class="font-bold text-lg text-amber-600">⏰ 時間承諾</h4>
+                            <p class="text-stone-600">這是一個衝刺計畫。建議每日投入3-4小時，週末投入更多時間，以確保在一年內完成目標。</p>
+                        </div>
+                         <div class="p-6 rounded-lg card">
+                            <h4 class="font-bold text-lg text-amber-600">💡 學習策略</h4>
+                            <p class="text-stone-600">以 JavaScript 為核心技術棧，貫穿前端、後端與Web3開發，最大化學習效率，減少技術切換的成本。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Path Section -->
+            <section id="path" class="content-section">
+                <div class="text-center mb-8">
+                     <h2 class="text-2xl font-bold text-stone-700 mb-2">學習路徑：四階段完全解析</h2>
+                     <p class="max-w-3xl mx-auto text-stone-600">我們將一年的學習計畫分為四個循序漸進的階段。每個階段都有明確的目標和專案實作，幫助您從理論走向實踐。點擊下方卡片來查看每個階段的詳細內容。</p>
+                </div>
+                <div id="path-details" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Phase details will be injected here by JS -->
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="content-section">
+                 <div class="text-center mb-8">
+                     <h2 class="text-2xl font-bold text-stone-700 mb-2">互動技能樹</h2>
+                     <p class="max-w-3xl mx-auto text-stone-600">全端、AI、Web3涵蓋的技術繁多。這個互動技能樹將所有關鍵技術分門別類，點擊即可展開查看學習重點。這能幫助您建立清晰的知識地圖，了解各技術在整個版圖中的位置。</p>
+                </div>
+                <div class="space-y-4 max-w-4xl mx-auto" id="skills-accordion">
+                     <!-- Accordion items will be injected here -->
+                </div>
+            </section>
+            
+            <!-- Projects Section -->
+            <section id="projects" class="content-section">
+                <div class="text-center mb-8">
+                     <h2 class="text-2xl font-bold text-stone-700 mb-2">專案作品集展示</h2>
+                     <p class="max-w-3xl mx-auto text-stone-600">「做中學」是最好的學習方式。您的專案作品集是證明您實戰能力的最佳名片。這裡展示了在不同學習階段建議完成的專案，它們將逐步提升您的綜合開發能力。</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+                    <!-- Project cards will be injected here -->
+                </div>
+                <div class="flex justify-center mt-10">
+                    <button id="generateProjectBtn" class="bg-amber-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-amber-600 transition shadow-md flex items-center space-x-2">
+                        <span>✨ 生成新專案 идеи ✨</span>
+                    </button>
+                </div>
+                <div id="generatedProjectOutput" class="col-span-full mt-8 hidden">
+                    <div class="loading-indicator hidden" id="projectLoadingIndicator">
+                        <div class="spinner"></div>
+                        <p class="ml-4 text-stone-600">正在生成專案點子，請稍候...</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- KPI Section -->
+            <section id="kpi" class="content-section">
+                <div class="text-center mb-8">
+                     <h2 class="text-2xl font-bold text-stone-700 mb-2">學習成果檢視 (KPI)</h2>
+                     <p class="max-w-3xl mx-auto text-stone-600">設定明確的目標並持續追蹤，是自學成功的關鍵。以下關鍵績效指標(KPI)將幫助您量化學習成果，從程式碼品質到社群參與，全方位評估您的成長。</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="kpi-grid">
+                    <!-- KPI cards will be injected here -->
+                </div>
+            </section>
+
+            <!-- Resources Section -->
+            <section id="resources" class="content-section">
+                <div class="text-center mb-8">
+                     <h2 class="text-2xl font-bold text-stone-700 mb-2">免費學習資源庫</h2>
+                     <p class="max-w-3xl mx-auto text-stone-600">我們為您彙整了報告中提到的所有高品質免費學習資源。使用下方的篩選器，快速找到您需要的課程、文件或教學，讓您的學習之路更加順暢。</p>
+                </div>
+                <div class="flex justify-center mb-6 space-x-2" id="resource-filters">
+                    <!-- Filter buttons will be injected here -->
+                </div>
+                <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="resources-grid">
+                    <!-- Resource cards will be injected here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.content-section');
+
+        const data = {
+            phases: [
+                {
+                    name: "Phase 1: 基礎網頁開發",
+                    duration: 2,
+                    goal: "掌握HTML, CSS, JavaScript核心，能獨立建構靜態與簡單互動網頁，熟悉Git版本控制。",
+                    content: "HTML/CSS基礎與進階、JavaScript核心、Git/GitHub。",
+                    projects: "個人作品集網站、響應式登陸頁面、JavaScript小遊戲。",
+                    color: "rgba(251, 191, 36, 0.7)",
+                },
+                {
+                    name: "Phase 2: 全端核心開發",
+                    duration: 3,
+                    goal: "掌握React前端框架，Node.js/Express後端開發，SQL與NoSQL資料庫操作，以及API設計與測試。",
+                    content: "React基礎與進階、Node.js/Express、SQL（PostgreSQL/MySQL）、NoSQL（MongoDB）、RESTful API開發。",
+                    projects: "全端CRUD應用程式（如待辦事項清單、簡單部落格系統）。",
+                    color: "rgba(249, 115, 22, 0.7)",
+                },
+                {
+                    name: "Phase 3: AI與Web3整合入門",
+                    duration: 4,
+                    goal: "理解AI/ML基礎概念，學會整合常見AI API，掌握區塊鏈基礎知識，並能開發簡單的智能合約與dApp。",
+                    content: "AI/ML核心概念、AI API整合、區塊鏈與智能合約基礎、Solidity、Web3.js/Ethers.js。",
+                    projects: "整合AI API的Web應用（如聊天機器人）、簡單dApp（如基幣轉帳應用）。",
+                    color: "rgba(239, 68, 68, 0.7)",
+                },
+                {
+                    name: "Phase 4: 部署、優化與進階實作",
+                    duration: 2,
+                    goal: "熟悉應用程式部署流程，了解Web安全基礎，優化專案性能，並完善個人作品集。",
+                    content: "Docker基礎、雲端部署平台（Heroku/Vercel）、Web安全基礎、性能優化。",
+                    projects: "將所有專案部署到線上，優化性能與使用者體驗。",
+                    color: "rgba(139, 92, 246, 0.7)",
+                },
+                {
+                    name: "Phase 5: 彈性/緩衝/深入學習",
+                    duration: 1,
+                    goal: "回顧、深入探索難點，或學習新興技術，避免學習倦怠。",
+                    content: "根據個人興趣和遇到的瓶頸進行深入學習。",
+                    projects: "完善作品集，或參與開源專案。",
+                    color: "rgba(34, 197, 94, 0.7)",
+                }
+            ],
+            skills: [
+                {
+                    category: '前端開發',
+                    items: [
+                        { name: 'HTML, CSS', desc: '網頁結構與樣式設計、響應式佈局(Flexbox, Grid)。' },
+                        { name: 'JavaScript', desc: '核心語法、DOM操作、事件處理、非同步編程(Async/Await)。' },
+                        { name: 'Git/GitHub', desc: '版本控制基本概念與操作、協作流程。' },
+                        { name: 'React.js', desc: '組件化開發、狀態管理(Hooks)、路由(React Router)。' }
+                    ]
+                },
+                {
+                    category: '後端開發',
+                    items: [
+                        { name: 'Node.js/Express', desc: '伺服器搭建、路由、中間件、API處理。' },
+                        { name: 'SQL 資料庫 (PostgreSQL)', desc: '關聯式資料庫概念、SQL CRUD操作、資料表設計。' },
+                        { name: 'NoSQL 資料庫 (MongoDB)', desc: '文件型資料庫概念、MongoDB CRUD操作、索引優化。' },
+                        { name: 'RESTful APIs', desc: 'API設計原則、HTTP方法、JSON格式、使用Postman測試。' }
+                    ]
+                },
+                {
+                    category: 'AI 整合',
+                    items: [
+                        { name: 'AI/ML 核心概念', desc: '監督式/非監督式學習、NLP、CV基本原理。' },
+                        { name: 'AI API 整合', desc: '透過API調用AI模型(OpenAI, Google AI)，使用JS與API互動。' },
+                    ]
+                },
+                {
+                    category: 'Web3 開發',
+                    items: [
+                        { name: '區塊鏈與智能合約', desc: '區塊鏈原理、智能合約概念、Solidity語法。' },
+                        { name: 'dApp 開發', desc: '使用Web3.js/Ethers.js讓前端與智能合約互動，連接錢包(MetaMask)。' },
+                    ]
+                },
+                 {
+                    category: '部署與 DevOps',
+                    items: [
+                        { name: 'Docker', desc: '容器化概念，打包應用程式以確保環境一致性。' },
+                        { name: '雲端部署', desc: '使用 Vercel/Netlify (前端) 或 Heroku (後端) 部署應用。' },
+                        { name: 'CI/CD', desc: '使用 GitHub Actions 自動化測試與部署流程。' },
+                    ]
+                }
+            ],
+            projects: [
+                { name: "個人作品集網站", desc: "使用HTML, CSS, JS建立一個靜態但響應式設計的個人網站，展示您的技能和專案。", phase: 1 },
+                { name: "JavaScript 小遊戲", desc: "開發如猜數字、井字遊戲等，鞏固JS邏輯和DOM操作能力。", phase: 1 },
+                { name: "全端部落格系統", desc: "使用MERN(MongoDB, Express, React, Node.js)技術棧，開發一個具備增刪改查(CRUD)功能的部落格平台。", phase: 2 },
+                { name: "AI 聊天機器人", desc: "整合 OpenAI API，使用React和Node.js開發一個能進行自然語言對話的Web應用。", phase: 3 },
+                { name: "基礎 NFT 鑄造 dApp", desc: "編寫Solidity智能合約，並使用React和Ethers.js建立一個前端介面，讓使用者可以連接錢包並鑄造NFT。", phase: 3 },
+                { name: "專案線上部署", desc: "將您完成的所有專案部署到線上，並建立一個專業的作品集網站連結所有線上Demo。", phase: 4 },
+            ],
+            kpis: [
+                { name: "學習進度", desc: "每月完成約8-10%的總課程進度，確保按時推進學習計畫。" },
+                { name: "程式碼品質", desc: "專案程式碼遵循良好風格，Linting錯誤率低，並尋求至少一次同行Code Review。" },
+                { name: "問題解決能力", desc: "提升獨立除錯效率，每週至少成功解決3個複雜技術問題。" },
+                { name: "專案實作能力", desc: "完成各階段指定數量的專案，並完整實現核心功能。" },
+                { name: "部署能力", desc: "至少成功部署1個全端、1個AI、1個Web3專案到線上。" },
+                { name: "社群參與", desc: "每月至少參與5次技術討論或對開源專案做出貢獻。" },
+                { name: "持續學習", desc: "每週至少閱讀1篇新的技術文章或官方文件，保持技能更新。" }
+            ],
+            resources: [
+                { name: "freeCodeCamp", category: "綜合", desc: "提供完整的全端開發認證課程，專案導向。", url: "https://www.freecodecamp.org/" },
+                { name: "The Odin Project", category: "綜合", desc: "開源的全端JavaScript學習路徑，強調做中學。", url: "https://www.theodinproject.com/" },
+                { name: "MDN Web Docs", category: "前端", desc: "最權威的HTML, CSS, JavaScript教學與參考資料。", url: "https://developer.mozilla.org/" },
+                { name: "React 官方文件", category: "前端", desc: "學習React最詳盡、最準確的資源。", url: "https://react.dev/" },
+                { name: "Full Stack Open", category: "綜合", desc: "赫爾辛基大學提供的高品質免費全端課程。", url: "https://fullstackopen.com/" },
+                { name: "Cyfrin Updraft", category: "Web3", desc: "免費的Solidity智能合約開發課程，內容深入。", url: "https://updraft.cyfrin.io/" },
+                { name: "Alchemy University", category: "Web3", desc: "提供從區塊鏈基礎到dApp開發的完整課程。", url: "https://www.alchemy.com/university" },
+                { name: "Google ML Crash Course", category: "AI", desc: "Google提供的快速入門機器學習課程。", url: "https://developers.google.com/machine-learning/crash-course" },
+            ]
+        };
+
+        function switchTab(hash) {
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.hash === hash);
+            });
+            sections.forEach(section => {
+                section.classList.toggle('active', `#${section.id}` === hash);
+            });
+        }
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash || '#overview';
+            switchTab(initialHash);
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    history.pushState(null, '', e.target.hash);
+                    switchTab(e.target.hash);
+                });
+            });
+
+            window.addEventListener('popstate', () => {
+                const hash = window.location.hash || '#overview';
+                switchTab(hash);
+            });
+            
+            initializeTimelineChart();
+            populatePathDetails();
+            populateSkills();
+            populateProjects();
+            populateKPIs();
+            populateResources();
+
+            // Initialize Gemini API feature
+            setupGeminiProjectGenerator();
+        });
+
+        function initializeTimelineChart() {
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            const timelineChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.phases.map(p => p.name),
+                    datasets: [{
+                        label: '學習月數',
+                        data: data.phases.map(p => p.duration),
+                        backgroundColor: data.phases.map(p => p.color),
+                        borderColor: '#fdfcfb',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                             labels: {
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += `${context.parsed} 個月`;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            history.pushState(null, '', '#path');
+                            switchTab('#path');
+                            const index = elements[0].index;
+                            const phaseElement = document.getElementById(`phase-${index}`);
+                            if(phaseElement) {
+                                phaseElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                phaseElement.style.transform = 'scale(1.05)';
+                                setTimeout(() => {
+                                    phaseElement.style.transform = 'scale(1)';
+                                }, 500);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function populatePathDetails() {
+            const container = document.getElementById('path-details');
+            container.innerHTML = data.phases.map((phase, index) => `
+                <div id="phase-${index}" class="card p-6 rounded-lg flex flex-col" style="border-top: 4px solid ${phase.color}; transition: transform 0.3s ease;">
+                    <h3 class="font-bold text-lg mb-2 text-stone-800">${phase.name}</h3>
+                    <p class="text-sm text-amber-600 font-semibold mb-3">預計時長：${phase.duration} 個月</p>
+                    <div class="text-stone-600 space-y-3 flex-grow">
+                        <p><strong class="font-semibold">🎯 目標：</strong>${phase.goal}</p>
+                        <p><strong class="font-semibold">📘 內容：</strong>${phase.content}</p>
+                        <p><strong class="font-semibold">🛠️ 專案：</strong>${phase.projects}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function populateSkills() {
+            const accordionContainer = document.getElementById('skills-accordion');
+            accordionContainer.innerHTML = data.skills.map((skillCategory, index) => `
+                <div class="rounded-lg overflow-hidden border border-stone-200 bg-white">
+                    <button class="w-full text-left p-4 font-semibold text-lg flex justify-between items-center bg-stone-50 hover:bg-stone-100 transition" data-accordion-target="skill-content-${index}">
+                        ${skillCategory.category}
+                        <span class="transform transition-transform duration-300">▼</span>
+                    </button>
+                    <div id="skill-content-${index}" class="hidden p-4 border-t border-stone-200">
+                        <ul class="space-y-3 list-disc list-inside text-stone-600">
+                            ${skillCategory.items.map(item => `<li><strong class="font-semibold text-stone-700">${item.name}:</strong> ${item.desc}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `).join('');
+
+            accordionContainer.querySelectorAll('[data-accordion-target]').forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-accordion-target');
+                    const content = document.getElementById(targetId);
+                    const icon = button.querySelector('span');
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+        }
+
+        function populateProjects() {
+            const container = document.getElementById('projects-grid');
+            container.innerHTML = data.projects.map(project => `
+                <div class="card p-6 rounded-lg flex flex-col">
+                    <span class="text-xs font-bold uppercase text-amber-500 bg-amber-100 px-2 py-1 rounded-full self-start mb-3">Phase ${project.phase}</span>
+                    <h3 class="font-bold text-lg mb-2 text-stone-800">${project.name}</h3>
+                    <p class="text-stone-600 flex-grow">${project.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function populateKPIs() {
+            const container = document.getElementById('kpi-grid');
+            container.innerHTML = data.kpis.map(kpi => `
+                <div class="card p-6 rounded-lg">
+                    <h3 class="font-bold text-lg mb-2 text-stone-800">${kpi.name}</h3>
+                    <p class="text-stone-600">${kpi.desc}</p>
+                </div>
+            `).join('');
+        }
+        
+        function populateResources() {
+            const container = document.getElementById('resources-grid');
+            const filtersContainer = document.getElementById('resource-filters');
+            
+            const categories = ['全部', ...new Set(data.resources.map(r => r.category))];
+            
+            filtersContainer.innerHTML = categories.map(category => `
+                <button class="resource-filter-btn px-4 py-2 text-sm font-medium rounded-full transition ${category === '全部' ? 'bg-amber-500 text-white' : 'bg-white text-stone-600 hover:bg-stone-100'}" data-category="${category}">
+                    ${category}
+                </button>
+            `).join('');
+
+            function renderResources(category) {
+                 const filteredResources = category === '全部' 
+                    ? data.resources 
+                    : data.resources.filter(r => r.category === category);
+                
+                container.innerHTML = filteredResources.map(resource => `
+                    <a href="${resource.url}" target="_blank" rel="noopener noreferrer" class="card p-4 rounded-lg block">
+                        <h4 class="font-bold text-md text-stone-800">${resource.name}</h4>
+                        <p class="text-sm text-stone-500 mt-1">${resource.desc}</p>
+                        <span class="text-xs font-semibold text-amber-600 mt-3 inline-block">🔗 ${resource.category}</span>
+                    </a>
+                `).join('');
+            }
+            
+            filtersContainer.addEventListener('click', e => {
+                if (e.target.tagName === 'BUTTON') {
+                    const category = e.target.dataset.category;
+                    filtersContainer.querySelectorAll('button').forEach(btn => {
+                        btn.classList.toggle('bg-amber-500', btn.dataset.category === category);
+                        btn.classList.toggle('text-white', btn.dataset.category === category);
+                        btn.classList.toggle('bg-white', btn.dataset.category !== category);
+                        btn.classList.toggle('text-stone-600', btn.dataset.category !== category);
+                    });
+                    renderResources(category);
+                }
+            });
+
+            renderResources('全部');
+        }
+
+        // Gemini API Integration for Project Idea Generator
+        async function setupGeminiProjectGenerator() {
+            const generateBtn = document.getElementById('generateProjectBtn');
+            const outputDiv = document.getElementById('generatedProjectOutput');
+            const loadingIndicator = document.getElementById('projectLoadingIndicator');
+
+            generateBtn.addEventListener('click', async () => {
+                outputDiv.classList.add('hidden'); // Hide previous output
+                loadingIndicator.classList.remove('hidden'); // Show loading indicator
+
+                const prompt = `Generate a detailed project idea for a beginner full-stack developer who is also learning AI and Web3 concepts. The idea should be suitable for a portfolio and include:
+                1. Project Name
+                2. Brief Description (1-2 sentences)
+                3. Key Technologies (List 3-5 specific technologies from HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, PostgreSQL, Solidity, Web3.js, Ethers.js, basic AI APIs)
+                4. Core Features (List 3-5 distinct features)
+                5. Potential Extensions (List 1-2 advanced ideas)
+
+                Please format the response clearly, using headings and bullet points for readability. Respond in Traditional Chinese.`;
+
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Leave as empty string, Canvas will provide it
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const generatedText = result.candidates[0].content.parts[0].text;
+                        
+                        outputDiv.innerHTML = `
+                            <div class="card p-6 rounded-lg border-l-4 border-amber-500 shadow-lg">
+                                <h3 class="font-bold text-xl mb-3 text-amber-700">✨ 新生成的專案點子 ✨</h3>
+                                <div class="prose max-w-none text-stone-700">
+                                    ${generatedText.replace(/\n/g, '<br>')}
+                                </div>
+                            </div>
+                        `;
+                        outputDiv.classList.remove('hidden');
+                    } else {
+                        outputDiv.innerHTML = `<div class="card p-6 rounded-lg bg-red-100 text-red-700">無法生成專案點子，請稍後再試。</div>`;
+                        outputDiv.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    outputDiv.innerHTML = `<div class="card p-6 rounded-lg bg-red-100 text-red-700">生成專案點子時發生錯誤：${error.message}</div>`;
+                    outputDiv.classList.remove('hidden');
+                } finally {
+                    loadingIndicator.classList.add('hidden'); // Hide loading indicator
+                }
+            });
+        }
+    </script>
+</body>
+</html>

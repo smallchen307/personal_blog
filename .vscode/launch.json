@@ -1,0 +1,66 @@
+{
+    // 使用 IntelliSense 以得知可用的屬性。
+    // 暫留以檢視現有屬性的描述。
+    // 如需詳細資訊，請瀏覽: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Launch Chrome against localhost",
+        "url": "http://192.168.31.32:5500/index.html",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "type": "pwa-msedge",
+        "name": "Launch Microsoft Edge",
+        "request": "launch",
+        "runtimeArgs": [
+          "--remote-debugging-port=9222"
+        ],
+        "url": "http://127.0.0.1:5500",
+        "presentation": {
+          "hidden": true
+        }
+      },
+      {
+        "type": "pwa-msedge",
+        "name": "Launch Microsoft Edge in headless mode",
+        "request": "launch",
+        "runtimeArgs": [
+          "--headless",
+          "--remote-debugging-port=9222"
+        ],
+        "url": "http://127.0.0.1:5500",
+        "presentation": {
+          "hidden": true
+        }
+      },
+      {
+        "type": "vscode-edge-devtools.debug",
+        "name": "Open Edge DevTools",
+        "request": "attach",
+        "url": "http://127.0.0.1:5500",
+        "presentation": {
+          "hidden": true
+        }
+      }
+    ],
+    "compounds": [
+      {
+        "name": "Launch Edge Headless and attach DevTools",
+        "configurations": [
+          "Launch Microsoft Edge in headless mode",
+          "Open Edge DevTools"
+        ]
+      },
+      {
+        "name": "Launch Edge and attach DevTools",
+        "configurations": [
+          "Launch Microsoft Edge",
+          "Open Edge DevTools"
+        ]
+      }
+    ]
+}
+
