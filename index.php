@@ -1,100 +1,74 @@
 <?php
 require 'db.php';
+// 引入統一的 Header
+require 'header.php'; 
 
-// 撈取已發布文章
+// 撈取文章用於下方的列表
 $stmt = $pdo->query("SELECT * FROM posts WHERE status = 'published' ORDER BY created_at DESC");
-$posts = $stmt->fetchAll();
+$all_posts = $stmt->fetchAll();
+
+// 分類文章
+$photo_posts = array_filter($all_posts, function($p) { return $p['type'] === 'photo'; });
+$daily_posts = array_filter($all_posts, function($p) { return $p['type'] !== 'photo'; });
+
+// 固定 Hero 背景圖路徑 (你可以換成你專案中固定的圖)
+$fixed_hero_img = 'https://attach.mobile01.com/attach/202103/mobile01-52357bb5d1f6f06546ebbd73469a2afc.jpg?original=true';
 ?>
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmallChen's Blog</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #e2e8f0; }
-        .glass-card { 
-            background: rgba(15, 23, 42, 0.6); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-        }
-        .glow:hover { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
-    </style>
-</head>
-<body class="selection:bg-blue-500/30">
 
-    <div class="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-emerald-600/10 blur-[100px] rounded-full"></div>
-    </div>
-
-    <nav class="sticky top-0 z-50 px-6 py-4 border-b border-white/5 bg-slate-950/50 backdrop-blur-md">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="index.php" class="text-xl font-bold tracking-tighter hover:opacity-80 transition">SMALLCHEN<span class="text-blue-500">.</span></a>
-            <div class="flex gap-6 items-center text-sm font-medium text-slate-400">
-                <a href="admin/login.php" class="hover:text-white transition">登入後台</a>
-                <a href="admin/post_manager.php" class="bg-blue-600/10 text-blue-400 px-4 py-2 rounded-full border border-blue-500/20 hover:bg-blue-600 hover:text-white transition">管理文章</a>
+    <section class="relative bg-cover bg-center h-[500px] md:h-[600px] flex items-center justify-center text-white"
+             style="background-image: url('<?= $fixed_hero_img ?>');">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative text-center p-6 max-w-2xl mx-auto rounded-lg">
+            <h1 class="text-4xl md:text-[3.5rem] font-bold mb-4 leading-tight">
+                探索我的創意與學習之旅
+            </h1>
+            <p class="text-lg md:text-xl mb-8">這裡融合了我的攝影作品、學習歷程與知識分享。</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="#photo-section" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
+                    進入攝影視界
+                </a>
+                <a href="#daily-section" class="bg-white text-gray-900 hover:bg-gray-100 font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
+                    查看學習日誌
+                </a>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <main class="max-w-6xl mx-auto px-6 py-16">
-        <header class="mb-20 text-center">
-            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-b from-white to-slate-500 bg-clip-text text-transparent">探索。紀錄。成長</h1>
-            <p class="text-slate-400 text-lg max-w-2xl mx-auto">這是我存放程式學習、攝影作品與生活隨筆的數位空間。</p>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <?php if (empty($posts)): ?>
-                <div class="col-span-full text-center py-20 text-slate-500">
-                    <p>目前還沒有發布的文章...</p>
+    <main class="container mx-auto py-12 px-4">
+        <section id="photo-section" class="mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">精選攝影內容</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <?php foreach (array_slice($photo_posts, 0, 4) as $post): ?>
+                <div class="card-bg rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 border border-gray-100 bg-white">
+                    <img src="<?= htmlspecialchars($post['cover_image']) ?: 'https://placehold.co/400x225?text=No+Image' ?>" alt="攝影" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2"><?= htmlspecialchars($post['title']) ?></h3>
+                        <p class="text-gray-600 text-sm line-clamp-2"><?= mb_strimwidth(strip_tags($post['content']), 0, 60, "...") ?></p>
+                        <a href="post_view.php?slug=<?= $post['slug'] ?>" class="inline-block mt-4 text-red-500 hover:text-red-600 font-medium transition duration-300">觀看文章 &rarr;</a>
+                    </div>
                 </div>
-            <?php else: ?>
-                <?php foreach ($posts as $post): ?>
-                <a href="post_view.php?slug=<?= $post['slug'] ?>" class="group">
-                    <article class="glass-card rounded-[2rem] overflow-hidden glow transition-all duration-500 hover:-translate-y-2 h-full flex flex-col">
-                        <div class="relative h-56 overflow-hidden">
-                            <?php if ($post['cover_image']): ?>
-                                <img src="<?= htmlspecialchars($post['cover_image']) ?>" 
-                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <?php else: ?>
-                                <div class="w-full h-full bg-slate-900 flex items-center justify-center text-5xl opacity-40">
-                                    <?= $post['type'] === 'photo' ? '📸' : '✍️' ?>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <div class="absolute top-4 left-4">
-                                <span class="px-3 py-1 text-[10px] font-bold tracking-widest uppercase rounded-full bg-blue-500 text-white shadow-lg">
-                                    <?= $post['type'] ?>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="p-8 flex flex-col flex-grow">
-                            <time class="text-xs text-slate-500 font-mono mb-3"><?= date('F j, Y', strtotime($post['created_at'])) ?></time>
-                            <h2 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition"><?= htmlspecialchars($post['title']) ?></h2>
-                            <p class="text-slate-400 text-sm line-clamp-3 leading-relaxed mb-6">
-                                <?= mb_strimwidth(strip_tags($post['content']), 0, 120, "...") ?>
-                            </p>
-                            <div class="mt-auto flex items-center text-blue-400 text-sm font-bold">
-                                閱讀全文 
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </div>
-                        </div>
-                    </article>
-                </a>
                 <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
+            </div>
+        </section>
+
+        <section id="daily-section" class="mb-16 bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">最新學習日誌</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <?php foreach (array_slice($daily_posts, 0, 4) as $post): ?>
+                <div class="card-bg rounded-lg shadow-sm overflow-hidden border border-gray-200">
+                    <div class="p-5">
+                        <span class="text-sm font-semibold text-blue-600 mb-2 block uppercase"><?= htmlspecialchars($post['type']) ?></span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2"><?= htmlspecialchars($post['title']) ?></h3>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2"><?= mb_strimwidth(strip_tags($post['content']), 0, 100, "...") ?></p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 text-xs"><?= date('Y/m/d', strtotime($post['created_at'])) ?></span>
+                            <a href="post_view.php?slug=<?= $post['slug'] ?>" class="text-blue-500 hover:text-blue-600 font-medium transition duration-300">閱讀更多 &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
     </main>
 
-    <footer class="text-center py-20 border-t border-white/5 text-slate-600 text-sm">
-        &copy; <?= date('Y') ?> SmallChen Blog. Powered by PHP & Tailwind.
-    </footer>
-
-</body>
-</html>
+<?php include 'footer.php'; ?>
