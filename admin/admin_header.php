@@ -24,7 +24,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="flex gap-8 items-center">
                     <span class="text-xl font-bold text-blue-400 tracking-wider">控制台</span>
                     <div class="hidden md:flex gap-6">
-                        <a href="../index.php" class="text-gray-300 hover:text-white transition">會員管理</a>
+                        <a href="../index.php" class="text-gray-300 hover:text-white transition">首頁</a>
                         <a href="post_manager.php" class="text-gray-300 hover:text-white transition">內容管理</a>
                     </div>
                 </div>
