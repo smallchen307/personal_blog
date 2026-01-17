@@ -1,7 +1,10 @@
 <?php
-// admin_header.php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: ../user_login.php"); // 若非管理員，踢回登入頁
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -11,7 +14,11 @@ if (session_status() === PHP_SESSION_NONE) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>管理後台 - 綜合平台</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
         <style>
+            /* 修正 EasyMDE 在 Tailwind 環境下的邊框消失問題 */
+            .editor-toolbar, .CodeMirror { border: 1px solid #ddd !important; }
+            .EasyMDEContainer .CodeMirror { min-height: 400px; }
             /* 為了對齊 Gemini 樣板，稍微自定義背景色 */
             .bg-primary { background-color: #294e70; } /*#0d1a26*/
             .bg-secondary { background-color: #3c5f82; }/*#1a2b3c*/

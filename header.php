@@ -31,6 +31,32 @@ if (session_status() === PHP_SESSION_NONE) {
             box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
             padding: 1.5rem; 
         }
+
+        /* 完善後的 Markdown 內容樣式 */
+        .markdown-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #374151;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            color: #111827;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .markdown-content h1 { font-size: 2.25rem; }
+        .markdown-content h2 { font-size: 1.85rem; border-bottom: 2px solid #f3f4f6; pb-2; }
+        .markdown-content p { margin-bottom: 1.5rem; }
+        .markdown-content a { color: #3b82f6; text-decoration: underline; }
+        .markdown-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; }
+        .markdown-content img { max-width: 100%; border-radius: 0.5rem; margin: 2rem 0; }
+        .markdown-content code:not(pre code) { 
+            background: #fee2e2; 
+            color: #991b1b; 
+            padding: 0.2rem 0.4rem; 
+            border-radius: 0.25rem; 
+            font-size: 0.9em; 
+}
     </style>
 </head>
 <body class="antialiased">
