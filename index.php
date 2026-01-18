@@ -12,7 +12,7 @@ $photo_posts = array_filter($all_posts, function($p) { return $p['type'] === 'ph
 $daily_posts = array_filter($all_posts, function($p) { return $p['type'] !== 'photo'; });
 
 // 固定 Hero 背景圖路徑 (你可以換成你專案中固定的圖)
-$fixed_hero_img = 'https://attach.mobile01.com/attach/202103/mobile01-52357bb5d1f6f06546ebbd73469a2afc.jpg?original=true';
+$fixed_hero_img = '/uploads/firework.jpg';
 ?>
 
     <section class="relative bg-cover bg-center h-[500px] md:h-[600px] flex items-center justify-center text-white"
@@ -20,7 +20,7 @@ $fixed_hero_img = 'https://attach.mobile01.com/attach/202103/mobile01-52357bb5d1
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="relative text-center p-6 max-w-2xl mx-auto rounded-lg">
             <h1 class="text-4xl md:text-[3.5rem] font-bold mb-4 leading-tight">
-                探索我的創意與學習之旅
+                紀錄我的創意與學習之旅
             </h1>
             <p class="text-lg md:text-xl mb-8">這裡融合了我的攝影作品、學習歷程與知識分享。</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
