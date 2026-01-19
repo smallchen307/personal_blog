@@ -21,37 +21,49 @@ try{
         $fileName = $_FILES['cover_image']['name'];         //原始檔名
         $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)); //原始副檔名
 
-        //限制副檔名
+        // 1. 限制副檔名
         $allowedExts = ['jpg','jpeg','png','webp'];
+        if (!in_array($fileExt,$allowedExts)) { //驗證副檔名
+            echo json_encode(['success' => false, 'message' => '不支援的檔案格式']);
+            exit;
+        }            
+                
+        // 2. 驗證真的圖片檔           
+        $imageInfo = getimagesize($fileTmpPath);
+        if ($imageInfo === false) {
+            echo json_encode(['success' => false, 'message' => '檔案不是有效的圖片']);
+            exit();
+        }
+
+        // 3. 限制檔案大小
+        $maxSize = 25 * 1024 * 1024; // 25MB
+        if ($_FILES['cover_image']['size'] > $maxSize) {
+            echo json_encode(['success' => false, 'message' => '檔案過大(限制25MB)']);
+            exit();
+        }
+
+        // 4. 準備上傳目錄
+        $uploadDir = '../uploads/'; //設定要放圖片的資料夾
         
-        if (in_array($fileExt,$allowedExts)) { //驗證副檔名
-            $newFileName = md5(time().$fileName) . '.' . $fileExt; //重新命名檔案
-            
-            //驗證真的圖片檔           
-            $imageInfo = getimagesize($fileTmpPath);
-            if ($imageInfo === false) {
-                echo json_encode(['success' => false, 'message' => '檔案不是有效的圖片']);
-                exit();
-            }
-
-            $maxSize = 25 * 1024 * 1024; // 5MB
-            if ($_FILES['cover_image']['size'] > $maxSize) {
-                echo json_encode(['success' => false, 'message' => '檔案過大(限制25MB)']);
-                exit();
-            }
-
-            $uploadDir = '../uploads/'; //設定要放圖片的資料夾
-            if(!is_dir($uploadDir)) mkdir($uploadDir,0777,true); //如果資料夾不存在就建立
-
-            $destPath = $uploadDir.$newFileName;
-            if(move_uploaded_file($fileTmpPath,$destPath)){
-                $imagePath = 'uploads/'.$newFileName;
-            }
-            }else {
-                echo json_encode(['success' => false, 'message' => '檔案上傳失敗']);
+        if(!is_dir($uploadDir)) { //如果資料夾不存在就建立
+            if(!mkdir($uploadDir,0777,true)) { //嘗試建立資料夾
+                echo json_encode(['success' => false, 'message' => '無法建立上傳目錄，請檢查伺服器權限']);
                 exit;
             }
+        }
 
+        // 5. 搬移檔案
+        $newFileName = md5(time() . $fileName) . '.' . $fileExt;
+        $destPath = $uploadDir . $newFileName;
+
+        if (move_uploaded_file($fileTmpPath, $destPath)) {
+            // 成功搬移，設定要存入資料庫的路徑
+            $imagePath = 'uploads/' . $newFileName;
+        } else {
+            // 搬移失敗（這就是你遇到 Permission denied 的地方）
+            echo json_encode(['success' => false, 'message' => '檔案移動失敗，請檢查資料夾寫入權限']);
+            exit; // 務必中止，不要讓程式繼續執行 INSERT
+        }
     }
     
     //資料驗證
