@@ -85,10 +85,11 @@ require 'admin_header.php'; // 引入新的 Header
     //Slug 轉換邏輯
     titleInput.addEventListener('input', () => {    //監聽輸入事件，使用者每次輸入時觸發，即時更新 slug
         const autoSlug = titleInput.value
-            .toLowerCase()                          //將所有字元轉為小寫
-            .replace(/[^\w\s-]/g, '')               //移除所有非英文字母、數字、空格、底線和連字號的特殊字元
+            
+            .trim()                                 //這裡我們保留了中文，只剔除會破壞 URL 結構的符號
+            .replace(/[?#\/&?=#+.]/g, '')           // 移除 URL 中的危險保留字元：? # / & = + 
             .replace(/\s+/g, '-')                   //將一個或多個空格替換成單一連字號
-            .slice(0, 50)                           //限制長度為50個字元
+            .slice(0, 100)                           //限制長度為100個字元
         slugInput.value = autoSlug;
         slugPreview.textContent = autoSlug|| '...';       //slugPreview.textContent = autoSlug || '...';
     });

@@ -104,8 +104,8 @@ $fixed_hero_img = '/uploads/firework.jpg';
                         - mb_strimwidth() 用於截斷字串，確保預覽內容不會太長，並在結尾加上 "..."。
                         -->
                         <p class="text-gray-600 text-sm line-clamp-2"><?= mb_strimwidth(strip_tags($post['content']), 0, 60, "...") ?></p>
-                        <!-- 連結到完整的文章頁面，使用文章的 'slug' 作為唯一識別碼 -->
-                        <a href="post_view.php?slug=<?= $post['slug'] ?>" class="inline-block mt-4 text-red-500 hover:text-red-600 font-medium transition duration-300">觀看文章 &rarr;</a>
+                        <!-- 連結到完整的文章頁面，使用文章的 'id' 作為唯一識別碼 -->
+                        <a href="/post/<?= $post['id'] ?>/<?= $post['slug'] ?>" class="inline-block mt-4 text-red-500 hover:text-red-600 font-medium transition duration-300">觀看文章 &rarr;</a>
                     </div>
                 </div>
                 <?php endforeach; // 結束迴圈 ?>

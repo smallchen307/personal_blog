@@ -221,13 +221,10 @@ document.addEventListener('DOMContentLoaded', function() {
     titleInput.addEventListener('input', () => {
         // 將標題轉換為小寫
         const autoSlug = titleInput.value
-            .toLowerCase()
-            // 移除除了單詞字元、空白、連字號、中日韓文字以外的所有字元
-            .replace(/[^\w\s-\u4e00-\u9fa5]/g, '') 
-            // 將一個或多個連續的空白字元替換為單一連字號
-            .replace(/\s+/g, '-') 
-            // 限制 slug 的最大長度為 50 個字元
-            .slice(0, 50);
+            .trim()                                 //這裡我們保留了中文，只剔除會破壞 URL 結構的符號
+            .replace(/[?#\/&?=#+.]/g, '')           // 移除 URL 中的危險保留字元：? # / & = + 
+            .replace(/\s+/g, '-')                   //將一個或多個空格替換成單一連字號
+            .slice(0, 100)                           //限制長度為100個字元
         
         slugInput.value = autoSlug;
     });

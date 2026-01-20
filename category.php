@@ -84,7 +84,7 @@ $posts = $stmt->fetchAll();
                         </p>
                         
                         <div class="pt-6 border-t border-gray-800">
-                            <a href="/post_view.php?slug=<?= $post['slug'] ?>" 
+                            <a href="/post/<?= $post['id'] ?>/<?= $post['slug'] ?>"  
                                class="text-blue-400 hover:text-blue-300 font-semibold inline-flex items-center group">
                                 閱讀更多 
                                 <span class="ml-2 transition-transform group-hover:translate-x-1">→</span>

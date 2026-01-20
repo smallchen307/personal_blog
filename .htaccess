@@ -8,7 +8,14 @@
     # 2. 處理基礎分類：/category/photo
     RewriteRule ^category/([^/]+)/?$ category.php?type=$1 [L,QSA]
 
-    # 3. 補上這條：處理只有 /category 的情況，預設導向 blog
+    # 3. 處理只有 /category 的情況，預設導向 blog
     # 當網址精確匹配 category 或 category/ 時，執行這行
     RewriteRule ^category/?$ /category/blog [R=301,L]
+
+    # 1. 如果網址只有 ID (例如 /post/123)
+    RewriteRule ^post/([0-9]+)/?$ post_view.php?id=$1 [L,QSA]
+
+    # 2. 如果網址有 ID + 任何東西 (例如 /post/123/中文標題)
+    # 我們只抓取第一個括號內的數字 ID，後面的 (.*) 只負責匹配但不傳給 PHP
+    RewriteRule ^post/([0-9]+)/.+$ post_view.php?id=$1 [L,QSA]
 </IfModule>

@@ -1,23 +1,24 @@
 <?php
 //post_view.php
+
 require 'db.php';                   // 引入資料庫連接設定
 require_once 'Parsedown.php';       // 引入 Markdown 解析器庫
 require_once 'models/Comment.php';  //引入抓取留言模組
 
-// --- 1. 獲取並驗證文章代稱 (slug) ---
+// --- 1. 獲取並驗證文章代稱 (id) ---
 
-$slug = $_GET['slug'] ?? null;  // 從 GET 請求中獲取 'slug' 參數，如果不存在則為 null
+$id = $_GET['id'] ?? null;  // 從 GET 請求中獲取 'id' 參數，如果不存在則為 null
 
-// 如果 slug 不存在，表示未指定要查看的文章，將用戶重定向到首頁並終止腳本執行
-if (!$slug) {
+// 如果 id 不存在，表示未指定要查看的文章，將用戶重定向到首頁並終止腳本執行
+if (!$id) {
     header('Location: index.php');
     exit;
 }
 
-// --- 2. 從資料庫中根據 slug 撈取文章資料 ---
-// 準備 SQL 查詢語句，選擇 slug 匹配且狀態為 'published' 的文章
-$stmt = $pdo->prepare("SELECT * FROM posts WHERE slug = ? AND status = 'published'");
-$stmt->execute([$slug]);// 執行查詢，將 $slug 綁定到佔位符
+// --- 2. 從資料庫中根據 id 撈取文章資料 ---
+// 準備 SQL 查詢語句，選擇 id 匹配且狀態為 'published' 的文章
+$stmt = $pdo->prepare("SELECT * FROM posts WHERE id = ? AND status = 'published'");
+$stmt->execute([$id]);// 執行查詢，將 $id 綁定到佔位符
 $post = $stmt->fetch();// 以關聯數組的形式獲取查詢結果
 
 // 如果查詢結果為空，表示找不到對應的文章或文章未發布，將用戶重定向到首頁並終止腳本執行
@@ -25,6 +26,9 @@ if (!$post) {
     header('Location: index.php');
     exit;
 }
+
+
+
 
 // --- 3. 初始化 Markdown 解析器 ---
 
@@ -134,7 +138,7 @@ require 'header.php';
         <!-- 封面圖片 -->
         <?php if (!empty($post['cover_image'])): ?>
             <div class="mb-8 overflow-hidden rounded-xl shadow-lg">
-                <img src="<?= htmlspecialchars($post['cover_image']) ?>" 
+                <img src="/<?= htmlspecialchars($post['cover_image']) ?>" 
                      class="w-full h-auto object-cover" 
                      alt="Cover Image">
             </div>
@@ -224,7 +228,7 @@ require 'header.php';
         const formData = new FormData();
         formData.append('id', commentId);
 
-        const response = await fetch('controllers/CommentDeleteController.php', {
+        const response = await fetch('/controllers/CommentDeleteController.php', {
             method: 'POST',
             body: formData
         });
@@ -259,7 +263,7 @@ require 'header.php';
         const formData = new FormData(this);
     
         // 這裡要對準你剛才建立的 Controller 路徑
-        const response = await fetch('controllers/CommentController.php', {
+        const response = await fetch('/controllers/CommentController.php', {
             method: 'POST',
             body: formData
         });
