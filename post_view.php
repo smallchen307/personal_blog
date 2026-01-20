@@ -1,5 +1,5 @@
 <?php
-
+//post_view.php
 require 'db.php';                   // 引入資料庫連接設定
 require_once 'Parsedown.php';       // 引入 Markdown 解析器庫
 require_once 'models/Comment.php';  //引入抓取留言模組

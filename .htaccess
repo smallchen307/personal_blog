@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. 處理帶分頁的分類：/category/photo/page/2
+    RewriteRule ^category/([^/]+)/page/([0-9]+)/?$ category.php?type=$1&page=$2 [L,QSA]
+
+    # 2. 處理基礎分類：/category/photo
+    RewriteRule ^category/([^/]+)/?$ category.php?type=$1 [L,QSA]
+
+    # 3. 補上這條：處理只有 /category 的情況，預設導向 blog
+    # 當網址精確匹配 category 或 category/ 時，執行這行
+    RewriteRule ^category/?$ /category/blog [R=301,L]
+</IfModule>
