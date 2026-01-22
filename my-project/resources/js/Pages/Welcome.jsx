@@ -1,6 +1,6 @@
 import { Head, Link } from '@inertiajs/react';
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ auth, laravelVersion, phpVersion, posts }) {
     const handleImageError = () => {
         document
             .getElementById('screenshot-container')
@@ -15,12 +15,42 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
+            
+{/* 這裡加上 relative 和 z-20，讓它絕對處於背景圖層之上 */}
+        <div className="relative z-20 max-w-7xl mx-auto p-6">
+            <h2 className="text-3xl font-extrabold text-white mb-8 border-b border-gray-700 pb-4">
+                📖 我的舊專案文章庫
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
+                {posts && posts.map(post => (
+                    <div 
+                        key={post.id} 
+                        /* ，加入 hover:bg-red-500 測試感應 */
+                        className=" group bg-gray-900 rounded-xl shadow-lg overflow-hidden border-2 border-gray-700 hover:border-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer"
+                    >
+                        <div className="p-6">
+                            <h3 className="text-xl font-bold text-blue-400 mb-2">
+                                {post.title}
+                            </h3>
+                            <p className="text-gray-400 text-sm line-clamp-3">
+                                {post.content}
+                            </p>
+                            <div className="mt-4 flex justify-between items-center text-xs text-gray-500">
+                                <span>ID: {post.id}</span>
+                                <span className="text-blue-500">閱讀更多 →</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+            
             <div className="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-                <img
+                {/* <img
                     id="background"
                     className="absolute -left-20 top-0 max-w-[877px]"
                     src="https://laravel.com/assets/img/welcome/background.svg"
-                />
+                /> */}
                 <div className="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                     <div className="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                         <header className="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
