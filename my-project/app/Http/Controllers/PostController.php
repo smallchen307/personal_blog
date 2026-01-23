@@ -23,4 +23,12 @@ class PostController extends Controller
             'posts' => Post::all(),
         ]);
     }
+
+    public function post_view(Post $post) {
+        // 廚師現在手上已經直接拿到這篇文章了 ($post)
+        // 接下來只要把這盤菜交給前端的 Show.jsx 頁面
+        return Inertia::render('Post/PostView', [
+            'post' => $post
+        ]);
+    }
 }

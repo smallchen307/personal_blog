@@ -39,7 +39,7 @@ if (!isset($_SESSION['admin_id'])) {
                     <span class="text-sm text-gray-400 italic">
                         <?= htmlspecialchars($_SESSION['admin_user'] ?? '管理者') ?>
                     </span>
-                    <a href="../logout.php" class="bg-red-500/80 hover:bg-red-600 text-white text-sm px-4 py-1.5 rounded-full transition">
+                    <a href="../user_logout_api.php" class="bg-red-500/80 hover:bg-red-600 text-white text-sm px-4 py-1.5 rounded-full transition">
                         登出
                     </a>
                 </div>

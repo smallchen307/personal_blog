@@ -43,7 +43,7 @@ try{
         }
 
         // 4. 準備上傳目錄
-        $uploadDir = '../uploads/'; //設定要放圖片的資料夾
+        $uploadDir = './uploads/'; //設定要放圖片的資料夾
         
         if(!is_dir($uploadDir)) { //如果資料夾不存在就建立
             if(!mkdir($uploadDir,0777,true)) { //嘗試建立資料夾
@@ -58,7 +58,7 @@ try{
 
         if (move_uploaded_file($fileTmpPath, $destPath)) {
             // 成功搬移，設定要存入資料庫的路徑
-            $imagePath = 'uploads/' . $newFileName;
+            $imagePath = './uploads/' . $newFileName;
         } else {
             // 搬移失敗（這就是你遇到 Permission denied 的地方）
             echo json_encode(['success' => false, 'message' => '檔案移動失敗，請檢查資料夾寫入權限']);

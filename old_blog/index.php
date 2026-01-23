@@ -31,7 +31,7 @@ $daily_posts = array_filter($all_posts, function($p) { return $p['type'] !== 'ph
 
 // 設定一個固定的 Hero Section (頁首大圖) 的背景圖片路徑
 // 這樣可以方便地在一個地方管理這個圖片，而不是寫死在 HTML 中
-$fixed_hero_img = '/uploads/firework.jpg';
+$fixed_hero_img = './uploads/firework.jpg';
 ?>
 
     <!-- 

@@ -1,4 +1,5 @@
 <?php
+//post_manager.php
 require '../auth_check.php';
 require '../db.php';
 require 'admin_header.php';
@@ -36,7 +37,7 @@ $posts = $stmt->fetchAll();
                 <div class="flex gap-4 items-center">
                     <div class="w-16 h-12 rounded-lg bg-gray-800 flex items-center justify-center overflow-hidden border border-white/10 shadow-inner">
                         <?php if (!empty($post['cover_image'])): ?>
-                            <img src="../<?= htmlspecialchars($post['cover_image']) ?>" 
+                            <img src="./<?= htmlspecialchars($post['cover_image']) ?>" 
                                 class="w-full h-full object-cover" 
                                 alt="Cover">
                         <?php else: ?>

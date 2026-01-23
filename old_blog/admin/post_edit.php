@@ -104,7 +104,7 @@ require 'admin_header.php';
                 <?php // 如果文章已有封面圖片，則顯示預覽圖和刪除按鈕 ?>
                 <?php if (!empty($post['cover_image'])): ?>
                     <div id="imagePreviewContainer" class="relative w-full max-w-sm mb-4 group">
-                        <img src="../<?= htmlspecialchars($post['cover_image']) ?>" 
+                        <img src="./<?= htmlspecialchars($post['cover_image']) ?>" 
                             class="w-full h-48 object-cover rounded-xl border border-white/10 shadow-lg"
                             id="currentCoverImage">
                         

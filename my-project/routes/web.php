@@ -5,12 +5,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PostController;
-
 use App\Models\Post; //新增處
 
-
+// 當網址是 / （根目錄）時，去找 PostController 裡的 index 方法
 Route::get('/', [PostController::class, 'index']);
 
+// 當網址是 /post/5 時，去找 PostController 裡的 post_view 方法
+Route::get('/post/{post}', [PostController::class, 'post_view']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

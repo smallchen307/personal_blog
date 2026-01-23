@@ -1,6 +1,6 @@
 <?php 
 require '../auth_check.php'; 
-require 'admin_header.php'; // 引入新的 Header
+require '../admin_header.php'; // 引入新的 Header
 ?>
 
 <div class="max-w-4xl mx-auto bg-secondary rounded-xl shadow-2xl p-8 border border-gray-700">

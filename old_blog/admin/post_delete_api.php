@@ -21,8 +21,8 @@ try{
     $imgstmt->execute([$id]);
     $imgrow = $imgstmt->fetch();
 
-    if ($imgrow['cover_image'] && file_exists('../' . $imgrow['cover_image'])) {
-        unlink('../' . $imgrow['cover_image']);
+    if ($imgrow['cover_image'] && file_exists('./' . $imgrow['cover_image'])) {
+        unlink('./' . $imgrow['cover_image']);
     }
 
     //執行刪除指令

@@ -7,7 +7,7 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
 
 // 只有在「不是」登入頁的時候才檢查 Session
 if (!isset($_SESSION['admin_id']) && $currentPage !== 'login.php') {
-    header("Location: login.php");
+    header("Location: ./user_login.php");
     exit;
 }
 ?>

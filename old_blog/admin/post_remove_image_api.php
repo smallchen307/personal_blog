@@ -18,7 +18,7 @@ try {
 
     if ($post && $post['cover_image']) {
         // 2. 刪除實體檔案
-        $filePath = '../' . $post['cover_image'];
+        $filePath = './' . $post['cover_image'];
         if (file_exists($filePath)) {
             unlink($filePath);
         }
