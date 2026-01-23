@@ -51,15 +51,7 @@ $fixed_hero_img = './uploads/firework.jpg';
                 紀錄我的創意與學習之旅
             </h1>
             <p class="text-lg md:text-xl mb-8">這裡融合了我的攝影作品、學習歷程與知識分享。</p>
-            <!-- 兩個主要的行動呼籲 (Call-to-Action) 按鈕 -->
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="#photo-section" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
-                    進入攝影視界
-                </a>
-                <a href="#daily-section" class="bg-white text-gray-900 hover:bg-gray-100 font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
-                    查看學習日誌
-                </a>
-            </div>
+
         </div>
     </section>
 
@@ -95,7 +87,11 @@ $fixed_hero_img = './uploads/firework.jpg';
                     - htmlspecialchars() 用來防止 XSS 攻擊。
                     - 三元運算子 (?:) 檢查是否有封面圖片，若無，則顯示一個預設的佔位圖片。
                     -->
-                    <img src="<?= htmlspecialchars($post['cover_image']) ?: 'https://placehold.co/400x225?text=No+Image' ?>" alt="攝影" class="w-full h-48 object-cover">
+                    <img 
+                        src="<?= htmlspecialchars($post['cover_image'] ?? './image/default_photo.webp') ?>" 
+                        alt="<?= htmlspecialchars($post['title']) ?> 的封面照" 
+                        class="w-full h-48 object-cover"
+                    >
                     <div class="p-5">
                         <h3 class="text-xl font-semibold text-gray-900 mb-2"><?= htmlspecialchars($post['title']) ?></h3>
                         <!-- 

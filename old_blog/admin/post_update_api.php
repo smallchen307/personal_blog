@@ -45,12 +45,12 @@ try{
                 exit();
             }
 
-            $uploadDir = './uploads/'; //設定要放圖片的資料夾
+            $uploadDir = '../uploads/'; //設定要放圖片的資料夾
             if(!is_dir($uploadDir)) mkdir($uploadDir,0777,true); //如果資料夾不存在就建立
 
             $destPath = $uploadDir.$newFileName;
             if(move_uploaded_file($fileTmpPath,$destPath)){
-                $imagePath = './uploads/'.$newFileName;
+                $imagePath = '../uploads/'.$newFileName;
                 if ($old_image_path && file_exists('./' . $old_image_path)) {
                 unlink('./' . $old_image_path); 
             }
