@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人作品展示 - 參考 ysjf.com 風格</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .masonry-item { break-inside: avoid; margin-bottom: 1.5rem; }
+        .masonry-grid { column-count: 4; column-gap: 1.5rem; }
+        @media (max-width: 1024px) { .masonry-grid { column-count: 3; } }
+        @media (max-width: 768px) { .masonry-grid { column-count: 2; } }
+        @media (max-width: 480px) { .masonry-grid { column-count: 1; } }
+        .work-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .work-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-10 border-b">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-gray-800">創作空間</h1>
+            <div class="flex space-x-8 text-lg">
+                <a href="#works" class="text-gray-700 hover:text-blue-600 transition">作品</a>
+                <a href="#blog" class="text-gray-700 hover:text-blue-600 transition">部落格</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-600 transition">關於</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white py-24">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">影像創作與技術分享</h2>
+            <p class="text-xl md:text-2xl mb-10 opacity-90">探索我的影片製作、網站開發與設計作品</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#works" class="bg-white text-purple-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-xl">瀏覽作品</a>
+                <a href="#blog" class="border-2 border-white text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-purple-600 transition">閱讀部落格</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <section class="bg-white py-8 border-b">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-center flex-wrap gap-4">
+                <button class="filter-btn active bg-blue-600 text-white px-6 py-2 rounded-full font-medium" data-filter="all">全部</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-300" data-filter="video">影片</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-300" data-filter="web">網站</button>
+                <button class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-300" data-filter="design">設計</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section with Enhanced Masonry -->
+    <section id="works" class="container mx-auto px-6 py-16">
+        <div class="masonry-grid">
+            <!-- Video Work 1 -->
+            <div class="masonry-item work-card bg-white rounded-xl shadow-md overflow-hidden" data-category="video">
+                <div class="relative">
+                    <iframe width="100%" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen class="w-full"></iframe>
+                    <div class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">影片</div>
+                </div>
+                <div class="p-6">
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">動畫短片製作</h4>
+                    <p class="text-gray-600 mb-4 leading-relaxed">使用 After Effects 創作的原創動畫，展現視覺敘事技巧。</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">2024.01.15</span>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">觀看完整影片 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Website Work -->
+            <div class="masonry-item work-card bg-white rounded-xl shadow-md overflow-hidden" data-category="web">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/400x300/4f46e5/ffffff?text=E-commerce+Site" alt="Website" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">網站</div>
+                </div>
+                <div class="p-6">
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">電商平台設計</h4>
+                    <p class="text-gray-600 mb-4 leading-relaxed">完整的線上購物網站，整合支付系統和庫存管理。</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">2024.02.20</span>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">查看網站 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Work -->
+            <div class="masonry-item work-card bg-white rounded-xl shadow-md overflow-hidden" data-category="design">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/300x400/dc2626/ffffff?text=App+UI+Design" alt="Design" class="w-full h-64 object-cover">
+                    <div class="absolute top-4 left-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold">設計</div>
+                </div>
+                <div class="p-6">
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">手機 App UI 設計</h4>
+                    <p class="text-gray-600 mb-4 leading-relaxed">健身追蹤 app 的完整介面設計，注重用戶體驗和視覺一致性。</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">2024.03.10</span>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">查看設計稿 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Work 2 -->
+            <div class="masonry-item work-card bg-white rounded-xl shadow-md overflow-hidden" data-category="video">
+                <div class="relative">
+                    <iframe width="100%" height="250" src="https://www.youtube.com/embed/jNQXAC9IVRw" frameborder="0" allowfullscreen class="w-full"></iframe>
+                    <div class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">影片</div>
+                </div>
+                <div class="p-6">
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">產品展示影片</h4>
+                    <p class="text-gray-600 mb-4 leading-relaxed">為科技產品製作的專業展示影片，包含 3D 動畫和實拍鏡頭。</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">2024.04.05</span>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">觀看影片 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Work 2 -->
+            <div class="masonry-item work-card bg-white rounded-xl shadow-md overflow-hidden" data-category="web">
+                <div class="relative">
+                    <img src="https://via.placeholder.com/400x250/059669/ffffff?text=Portfolio+Website" alt="Portfolio" class="w-full h-40 object-cover">
+                    <div class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">網站</div>
+                </div>
+                <div class="p-6">
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">個人作品集網站</h4>
+                    <p class="text-gray-600 mb-4 leading-relaxed">響應式個人網站，展示設計作品和聯絡資訊。</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">2024.05.12</span>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">訪問網站 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Teaser -->
+            <div class="masonry-item work-card bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border-2 border-blue-200" data-category="blog">
+                <div class="text-center">
+                    <h4 class="font-bold text-2xl mb-3 text-gray-800">技術部落格</h4>
+                    <p class="text-gray-600 mb-6 leading-relaxed">分享程式開發、設計心得和最新技術趨勢</p>
+                    <a href="#blog" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition inline-block">進入部落格</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section Preview -->
+    <section id="blog" class="bg-white py-20">
+        <div class="container mx-auto px-6">
+            <h3 class="text-4xl font-bold text-center mb-12 text-gray-800">最新文章</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <article class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Laravel</span>
+                        <span class="text-gray-500 text-sm ml-4">2024.01.20</span>
+                    </div>
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">Laravel 開發最佳實務</h4>
+                    <p class="text-gray-600 mb-6 leading-relaxed">探討如何寫出更乾淨、可維護的 Laravel 程式碼。</p>
+                    <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">繼續閱讀 →</a>
+                </article>
+                <article class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">設計</span>
+                        <span class="text-gray-500 text-sm ml-4">2024.01.15</span>
+                    </div>
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">現代 UI/UX 設計趨勢</h4>
+                    <p class="text-gray-600 mb-6 leading-relaxed">分析 2024 年最熱門的介面設計趨勢和實作技巧。</p>
+                    <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">繼續閱讀 →</a>
+                </article>
+                <article class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">專案管理</span>
+                        <span class="text-gray-500 text-sm ml-4">2024.01.10</span>
+                    </div>
+                    <h4 class="font-bold text-xl mb-3 text-gray-800">敏捷開發實務</h4>
+                    <p class="text-gray-600 mb-6 leading-relaxed">分享在軟體專案中使用 Scrum 方法的經驗。</p>
+                    <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">繼續閱讀 →</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h5 class="font-bold text-xl mb-4">關於我</h5>
+                    <p class="text-gray-400 leading-relaxed">熱愛創作的開發者，專注於前端設計、後端開發和影片製作。</p>
+                </div>
+                <div>
+                    <h5 class="font-bold text-xl mb-4">聯絡方式</h5>
+                    <p class="text-gray-400">Email: hello@example.com</p>
+                    <p class="text-gray-400">WeChat: example_wechat</p>
+                </div>
+                <div>
+                    <h5 class="font-bold text-xl mb-4">關注我</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">YouTube</a>
+                        <a href="#" class="text-gray-400 hover:text-white">GitHub</a>
+                        <a href="#" class="text-gray-400 hover:text-white">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 創作空間. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const workItems = document.querySelectorAll('.masonry-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.dataset.filter;
+                
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active', 'bg-blue-600', 'text-white'));
+                filterButtons.forEach(btn => btn.classList.add('bg-gray-200', 'text-gray-700'));
+                button.classList.add('active', 'bg-blue-600', 'text-white');
+                button.classList.remove('bg-gray-200', 'text-gray-700');
+                
+                // Filter items
+                workItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
